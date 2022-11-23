@@ -7,7 +7,7 @@ CLBlas
 SSH to board:
     ssh root@192.168.0.118
     odroid
-    cd /usr/acc
+    cd /usr/acc/OpenCL_GPU_Acc
 
 Git token:
     Wang-Nachuan
@@ -21,4 +21,8 @@ Install driver:
     sudo cp TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase.ko /lib/modules/$(uname -r)/extras/
 
 Compile code:
-    g++ -lOpenCL add.cpp
+    For C:
+        gcc <code path> -o <output file name> -lOpenCL
+    For C++:
+        g++ <code path> -o <output file name> -lOpenCL
+   
