@@ -13,44 +13,16 @@ Git token:
     Wang-Nachuan
     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
 
-Setup Environment:
+Install driver:
+    make -C /usr/src/linux-4.14.85-152/ M=${PWD}/TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/ CONFIG_MALI_MIDGARD=m CONFIG_MALI_GATOR_SUPPORT=y CONFIG_MALI_MIDGARD_DVFS=y CONFIG_MALI_EXPERT=y CONFIG_MALI_PLATFORM_FAKE=y CONFIG_MALI_PLATFORM_THIRDPARTY=y CONFIG_MALI_PLATFORM_THIRDPARTY_NAME=devicetree modules
 
-    Upgrade OS:
-        sudo apt update
-        sudo apt upgrade
+    sudo mkdir -p /lib/modules/$(uname -r)/extras
 
-    C/C++ compiler:
-        sudo apt install build-essential -y
-
-    Git:
-        sudo apt install git -y
-    
-    CMake:
-        sudo apt install cmake -y
-    
-    OpenCL-SDK:
-        sudo apt install opencl-headers ocl-icd-opencl-dev -y
-
-    Kernel driver:
-
-        tar -xzf TX011-SW-99002-r28p0-01rel0.tgz
-
-        make -C /usr/src/linux-5.4.224-408/ M=${PWD}/TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/ CONFIG_MALI_MIDGARD=m CONFIG_MALI_GATOR_SUPPORT=y CONFIG_MALI_MIDGARD_DVFS=y CONFIG_MALI_EXPERT=y CONFIG_MALI_PLATFORM_FAKE=y CONFIG_MALI_PLATFORM_THIRDPARTY=y CONFIG_MALI_PLATFORM_THIRDPARTY_NAME=devicetree modules
-
-        sudo mkdir -p /lib/modules/$(uname -r)/extras
-
-        sudo cp TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase.ko /lib/modules/$(uname -r)/extras/
-
-        sudo depmod -a
-
-        sudo modprobe mali_kbase
-    
-    User-space driver:
+    sudo cp TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase.ko /lib/modules/$(uname -r)/extras/
 
 Compile code:
-
     For C:
         gcc <code path> -o <output file name> -lOpenCL
-
     For C++:
         g++ <code path> -o <output file name> -lOpenCL
+   
