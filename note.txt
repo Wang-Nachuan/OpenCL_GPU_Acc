@@ -5,6 +5,7 @@ khronos
 CLBlas
 
 SSH to board:
+    ssh-keygen -R 192.168.0.118
     ssh root@192.168.0.118
     odroid
     cd /usr/acc/OpenCL_GPU_Acc
@@ -14,15 +15,34 @@ Git token:
     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
 
 Install driver:
-    make -C /usr/src/linux-4.14.85-152/ M=${PWD}/TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/ CONFIG_MALI_MIDGARD=m CONFIG_MALI_GATOR_SUPPORT=y CONFIG_MALI_MIDGARD_DVFS=y CONFIG_MALI_EXPERT=y CONFIG_MALI_PLATFORM_FAKE=y CONFIG_MALI_PLATFORM_THIRDPARTY=y CONFIG_MALI_PLATFORM_THIRDPARTY_NAME=devicetree modules
 
-    sudo mkdir -p /lib/modules/$(uname -r)/extras
+    Kernel driver: 
 
-    sudo cp TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase.ko /lib/modules/$(uname -r)/extras/
+        tar -xzf TX011-SW-99002-r28p0-01rel0.tgz
+
+        make -C /usr/src/linux-4.14.43-138/ M=${PWD}/TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/ CONFIG_MALI_MIDGARD=m CONFIG_MALI_GATOR_SUPPORT=y CONFIG_MALI_MIDGARD_DVFS=y CONFIG_MALI_EXPERT=y CONFIG_MALI_PLATFORM_FAKE=y CONFIG_MALI_PLATFORM_THIRDPARTY=y CONFIG_MALI_PLATFORM_THIRDPARTY_NAME=devicetree modules
+
+        sudo mkdir -p /lib/modules/$(uname -r)/extras
+
+        sudo cp TX011-SW-99002-r28p0-01rel0/driver/product/kernel/drivers/gpu/arm/midgard/mali_kbase.ko /lib/modules/$(uname -r)/extras/
+
+        sudo depmod -a
+
+        sudo modprobe mali_kbase
+    
+    User-space driver:
+
+        tar -xzf malit62xr12p004rel0linux1fbdev.tar.gz
+
+        sudo cp fbdev/libmali.so /usr/lib/arm-linux-gnueabihf/
+
+        sudo cp fbdev/liboffline_compiler_api.so /usr/lib/arm-linux-gnueabihf/
+
+        sudo cp fbdev/libOpenCL.so.1 /usr/lib/arm-linux-gnueabihf/
 
 Compile code:
     For C:
-        gcc <code path> -o <output file name> -lOpenCL
+        gcc _ -o _ -lOpenCL
     For C++:
-        g++ <code path> -o <output file name> -lOpenCL
+        g++ _ -o _ -lOpenCL
    
